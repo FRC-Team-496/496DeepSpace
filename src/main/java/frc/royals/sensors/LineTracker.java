@@ -62,4 +62,6 @@ public class LineTracker extends SendableBase {
           builder.addBooleanProperty("rightLineTracker", this::getRight, null);
 
       }
+
+      
 }
