@@ -8,12 +8,13 @@
 package frc.royals.sensors;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
  * Line Tracker class for getting position of 3 Allen Bradley photo sensors
  */
-public class LineTracker {
+public class LineTracker extends SendableBase {
     private DigitalInput leftLineTracker, centerLineTracker, rightLineTracker;
     private int[] lines = new int[3];
 
@@ -42,10 +43,23 @@ public class LineTracker {
         return Integer.parseInt(""+lines[0] + lines[1] + lines[2]);
       }
 
+      public boolean getLeft() {
+          return leftLineTracker.get();
+      }
+      public boolean getCenter() {
+          return centerLineTracker.get();
+      }
+
+      public boolean getRight() {
+          return rightLineTracker.get();
+      }
+
       @Override
       public void initSendable(SendableBuilder builder) {
           builder.setSmartDashboardType("LineTracker");
-          builder.addValueProperty(key, getter, setter);
+          builder.addBooleanProperty("leftLineTracker", this::getLeft, null);
+          builder.addBooleanProperty("centerLineTracker", this::getCenter, null);
+          builder.addBooleanProperty("rightLineTracker", this::getRight, null);
 
       }
 }
