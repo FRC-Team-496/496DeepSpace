@@ -8,15 +8,18 @@
 package frc.royals.sensors;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SendableBase;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.SendableImpl;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
  * Line Tracker class for getting position of 3 Allen Bradley photo sensors
  */
-public class LineTracker extends SendableBase {
+public class LineTracker implements Sendable {
     private DigitalInput leftLineTracker, centerLineTracker, rightLineTracker;
     private int[] lines = new int[3];
+
+    private final SendableImpl m_sSendableImpl;
 
     /**
      * Constructs a LineTracker object using 3 DIO ports connected to sensors
@@ -25,6 +28,7 @@ public class LineTracker extends SendableBase {
      * @param rightLineTracker port that right line sensor is connected to
      */
     public LineTracker(int leftLineTracker, int centerLineTracker, int rightLineTracker) {
+        m_sSendableImpl = new SendableImpl(true);
         this.leftLineTracker = new DigitalInput(leftLineTracker);
         this.centerLineTracker = new DigitalInput(centerLineTracker);
         this.rightLineTracker = new DigitalInput(rightLineTracker);
@@ -54,7 +58,29 @@ public class LineTracker extends SendableBase {
           return rightLineTracker.get();
       }
 
-      @Override
+      
+
+    @Override
+    public String getName() {
+        return m_sSendableImpl.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        m_sSendableImpl.setName(name);
+    }
+
+    @Override
+    public String getSubsystem() {
+        return m_sSendableImpl.getSubsystem();
+    }
+
+    @Override
+    public void setSubsystem(String subsystem) {
+        m_sSendableImpl.setSubsystem(subsystem);
+    }
+
+    @Override
       public void initSendable(SendableBuilder builder) {
           builder.setSmartDashboardType("LineTracker");
           builder.addBooleanProperty("leftLineTracker", this::getLeft, null);
