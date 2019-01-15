@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LineTrackerSubsystem;
-import frc.royals.sensors.LineTracker;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static LineTrackerSubsystem lts;
 
-  private LineTracker lt;
+ 
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
