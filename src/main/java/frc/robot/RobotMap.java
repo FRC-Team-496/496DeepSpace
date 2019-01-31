@@ -28,4 +28,8 @@ public class RobotMap {
   public static final int centerLineTracker = 1;
   public static final int rightLineTracker = 3;
   
+  public static final int DRIVETRAIN_ENCODER_RIGHT_A = 4;
+  public static final int DRIVETRAIN_ENCODER_RIGHT_B = 5;
+  public static final int DRIVETRAIN_ENCODER_LEFT_A = 6;
+  public static final int DRIVETRAIN_ENCODER_LEFT_B =7;
 }

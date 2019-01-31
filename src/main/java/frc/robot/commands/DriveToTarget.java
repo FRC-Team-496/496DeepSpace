@@ -7,12 +7,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DriveWithJoystick extends Command {
-  public DriveWithJoystick() {
+public class DriveToTarget extends Command {
+  public DriveToTarget() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.m_driveTrain);
@@ -26,7 +25,6 @@ public class DriveWithJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_driveTrain.driveCurve(Robot.m_oi.getDriver().getY(Hand.kRight), -Robot.m_oi.getDriver().getX(Hand.kLeft), Robot.m_oi.getDriver().getBumper(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,13 +36,11 @@ public class DriveWithJoystick extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end(); 
   }
 }

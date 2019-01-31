@@ -12,7 +12,9 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.RobotMap;
 import frc.robot.commands.DriveWithJoystick;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -27,6 +29,7 @@ public class DriveTrain extends Subsystem {
   AHRS ahrs;
   Talon leftFront,leftRear, rightFront,rightRear;
   DifferentialDrive  m_drive;
+  Encoder left_Encoder, right_Encoder;
 
   public DriveTrain() {
     super();
@@ -43,6 +46,8 @@ public class DriveTrain extends Subsystem {
     SpeedControllerGroup m_right = new SpeedControllerGroup(leftFront, leftRear);
     SpeedControllerGroup m_left = new SpeedControllerGroup(rightFront, rightRear);
     m_drive = new DifferentialDrive (m_left,m_right);
+    left_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_LEFT_A,RobotMap.DRIVETRAIN_ENCODER_LEFT_B);
+    right_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_RIGHT_A, RobotMap.DRIVETRAIN_ENCODER_RIGHT_Bs);
   }
 
   @Override
@@ -52,7 +57,7 @@ public class DriveTrain extends Subsystem {
     setDefaultCommand(new DriveWithJoystick());
   }
 
-  public void drive(double x, double rot, boolean isQuickTurn) {
+  public void driveCurve(double x, double rot, boolean isQuickTurn) {
 
     m_drive.curvatureDrive(x, rot, isQuickTurn);
 
@@ -60,5 +65,32 @@ public class DriveTrain extends Subsystem {
 
   public void stop() {
     m_drive.curvatureDrive(0, 0, false);;
+  }
+
+  public void resetLeftEncoder() {
+    left_Encoder.reset();
+  }
+
+  public void resetRightEncoder() {
+    right_Encoder.reset();
+  }
+
+  public void resetGyro() {u
+    ahrs.reset();
+  }
+
+  public double getLeftDistance() {
+    return left_Encoder.getDistance();
+  }
+
+  public double getRightDistance() {
+    return right_Encoder.getDistance();
+  }
+
+  public double getAngle() {
+    return ahrs.getAngle();
+  }
+
+
   }
 }
