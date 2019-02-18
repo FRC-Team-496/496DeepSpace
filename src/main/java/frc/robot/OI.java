@@ -7,8 +7,17 @@
 
 package frc.robot;
 
+
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.FourBarDown;
+import frc.robot.commands.FourBarUp;
+import frc.robot.commands.In;
+import frc.robot.commands.Out;
+
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -43,10 +52,29 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   private XboxController driverStick = new XboxController(0);
+  private XboxController opStick = new XboxController(1);
+  
 
-  public JoystickButton driverA = new JoystickButton(driverStick, 0);
+  
+    
+    JoystickButton opA = new JoystickButton(opStick, 1);
+    JoystickButton opB = new JoystickButton(opStick, 2);
+    JoystickButton opX = new JoystickButton(opStick, 3);
+    JoystickButton opY = new JoystickButton(opStick, 4);
+  public OI(){
+  opA.whenPressed(new In());
+  opB.whenPressed(new Out());
+
+  opX.whileHeld(new FourBarUp());
+  opY.whileHeld(new FourBarDown());
+  }
+  
+  
   
   public XboxController getDriver() {
     return driverStick;
+  }
+  public XboxController getOp(){
+    return opStick;
   }
 }

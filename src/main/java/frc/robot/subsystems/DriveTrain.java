@@ -7,18 +7,15 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveWithJoystick;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
-
 
 /**
  * Add your docs here.
@@ -27,7 +24,7 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   AHRS ahrs;
-  Talon leftFront,leftRear, rightFront,rightRear;
+  WPI_VictorSPX left, right;
   DifferentialDrive  m_drive;
   Encoder left_Encoder, right_Encoder;
 
@@ -39,15 +36,13 @@ public class DriveTrain extends Subsystem {
       
       System.out.println(e);
     }
-    leftFront = new Talon(0);
-    leftRear = new Talon(1);
-    rightFront = new Talon(2);
-    rightRear = new Talon(3);
-    SpeedControllerGroup m_right = new SpeedControllerGroup(leftFront, leftRear);
-    SpeedControllerGroup m_left = new SpeedControllerGroup(rightFront, rightRear);
-    m_drive = new DifferentialDrive (m_left,m_right);
+    left = new WPI_VictorSPX(0);
+    right = new WPI_VictorSPX(1);
+    
+
+    m_drive = new DifferentialDrive (left,right);
     left_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_LEFT_A,RobotMap.DRIVETRAIN_ENCODER_LEFT_B);
-    right_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_RIGHT_A, RobotMap.DRIVETRAIN_ENCODER_RIGHT_Bs);
+    right_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_RIGHT_A, RobotMap.DRIVETRAIN_ENCODER_RIGHT_B);
   }
 
   @Override
@@ -55,6 +50,10 @@ public class DriveTrain extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new DriveWithJoystick());
+  }
+
+  public void drive(double leftSpeed, double rightSpeed){
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   public void driveCurve(double x, double rot, boolean isQuickTurn) {
@@ -75,7 +74,7 @@ public class DriveTrain extends Subsystem {
     right_Encoder.reset();
   }
 
-  public void resetGyro() {u
+  public void resetGyro() {
     ahrs.reset();
   }
 
@@ -87,10 +86,14 @@ public class DriveTrain extends Subsystem {
     return right_Encoder.getDistance();
   }
 
+  public double getAverageDistance() {
+    return (getRightDistance() + getLeftDistance()) /2;
+  }
+
   public double getAngle() {
     return ahrs.getAngle();
   }
 
 
   }
-}
+

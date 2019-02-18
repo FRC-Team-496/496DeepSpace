@@ -32,4 +32,6 @@ public class RobotMap {
   public static final int DRIVETRAIN_ENCODER_RIGHT_B = 5;
   public static final int DRIVETRAIN_ENCODER_LEFT_A = 6;
   public static final int DRIVETRAIN_ENCODER_LEFT_B =7;
+
+  public static final int BALL_LOADED = 8;
 }
