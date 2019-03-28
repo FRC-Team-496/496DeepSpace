@@ -8,9 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
@@ -32,7 +30,7 @@ public class Robot extends TimedRobot {
   public static Intake m_intake;
   public static FourBar m_fourBar;
 
-
+  //public static BadLog log;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -40,14 +38,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
+    //log = BadLog.init("test.bag");
+    //BadLog.createValue("Match Number", ""+ DriverStation.getInstance().getMatchNumber());
+    //BadLog.createTopic("Match Time","s",() -> DriverStation.getInstance().getMatchTime());
+
     m_driveTrain = new DriveTrain();
     m_elevator = new Elevator();
     m_intake = new Intake();
     m_fourBar = new FourBar();
     m_oi = new OI();
-   
 
+    //SmartDashboard.putData(new (RotateTo(45f)));
+   
+    //log.finishInitialization();
     
   }
 
@@ -61,7 +64,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    m_intake.log();
+   //log.updateTopics();
+   // log.log();
   }
 
   /**

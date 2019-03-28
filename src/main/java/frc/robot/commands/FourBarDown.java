@@ -14,7 +14,7 @@ public class FourBarDown extends Command {
   public FourBarDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.m_fourBar);
+    //requires(Robot.m_fourBar);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class FourBarDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_fourBar.set(0.5);
+    Robot.m_fourBar.set(0.75);
   }
 
   // Make this return true when this Command no longer needs to run execute()

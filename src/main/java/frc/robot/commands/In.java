@@ -32,6 +32,7 @@ public class In extends Command {
   @Override
   protected boolean isFinished() {
     return Robot.m_intake.isBallLoaded();
+    
   }
 
   // Called once after isFinished returns true

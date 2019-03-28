@@ -62,7 +62,7 @@ public class OI {
     JoystickButton opX = new JoystickButton(opStick, 3);
     JoystickButton opY = new JoystickButton(opStick, 4);
   public OI(){
-  opA.whenPressed(new In());
+  opA.toggleWhenPressed(new In());
   opB.whenPressed(new Out());
 
   opX.whileHeld(new FourBarUp());

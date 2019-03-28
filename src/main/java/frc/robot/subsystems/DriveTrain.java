@@ -10,10 +10,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+//import badlog.lib.BadLog;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveWithJoystick;
 
@@ -38,12 +40,17 @@ public class DriveTrain extends Subsystem {
     }
     left = new WPI_VictorSPX(0);
     right = new WPI_VictorSPX(1);
+    left.configOpenloopRamp(1);
+    right.configOpenloopRamp(1);
     
 
     m_drive = new DifferentialDrive (left,right);
     left_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_LEFT_A,RobotMap.DRIVETRAIN_ENCODER_LEFT_B);
     right_Encoder = new Encoder(RobotMap.DRIVETRAIN_ENCODER_RIGHT_A, RobotMap.DRIVETRAIN_ENCODER_RIGHT_B);
+
+
   }
+
 
   @Override
   public void initDefaultCommand() {
@@ -56,14 +63,19 @@ public class DriveTrain extends Subsystem {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
-  public void driveCurve(double x, double rot, boolean isQuickTurn) {
+  public void driveArcade(double xSpeed, double zRotation){
+    m_drive.arcadeDrive(xSpeed, zRotation);
+  }
 
-    m_drive.curvatureDrive(x, rot, isQuickTurn);
-
+  public void driveCurve(double xSpeed , double zRotation, Boolean isQuickTurn) {
+    if(isQuickTurn) {
+      zRotation = zRotation * 0.5;
+    }
+    m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
   }
 
   public void stop() {
-    m_drive.curvatureDrive(0, 0, false);;
+    m_drive.arcadeDrive(0, 0);
   }
 
   public void resetLeftEncoder() {
@@ -92,6 +104,12 @@ public class DriveTrain extends Subsystem {
 
   public double getAngle() {
     return ahrs.getAngle();
+  }
+
+  public void log() {
+    SmartDashboard.putData(ahrs);
+    
+
   }
 
 

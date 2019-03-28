@@ -20,12 +20,15 @@ public class Out extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if(!Robot.m_intake.isBallLoaded()){
+      cancel();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      
+   
       Robot.m_intake.set(-0.4);
     
     
@@ -45,7 +48,7 @@ public class Out extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_intake.stop();
+    //Robot.m_intake.stop();
   }
 
   // Called when another command which requires one or more of the same
