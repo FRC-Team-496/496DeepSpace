@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.LIftWithStick;
 
@@ -19,10 +20,12 @@ public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   WPI_TalonSRX elevator;
+  DigitalInput isUp, isDown;
   public Elevator(){
 
     elevator = new WPI_TalonSRX(0);
-    
+    isUp = new DigitalInput(3);
+    isDown = new DigitalInput(2);
   }
 
   @Override
@@ -38,6 +41,14 @@ public class Elevator extends Subsystem {
 
   public void stop() {
     elevator.set(0);
+  }
+
+  public boolean isUp() {
+    return isUp.get();
+  }
+
+  public boolean isDown() {
+    return isDown.get();
   }
 
 }

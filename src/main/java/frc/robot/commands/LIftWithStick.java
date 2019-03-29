@@ -27,7 +27,17 @@ public class LIftWithStick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_elevator.lift(-Robot.m_oi.getOp().getY(Hand.kRight));
+    
+    double liftSpeed = -Robot.m_oi.getOp().getY(Hand.kRight);
+    if(liftSpeed >0 && Robot.m_elevator.isUp()==true){
+      liftSpeed = 0;
+      end();
+    } else if(liftSpeed < 0 && Robot.m_elevator.isDown()) { 
+      liftSpeed = 0;
+      end();
+    } else {
+    Robot.m_elevator.lift(liftSpeed);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

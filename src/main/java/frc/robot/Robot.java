@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
 
     //SmartDashboard.putData(new (RotateTo(45f)));
-   
+    CameraServer.getInstance().startAutomaticCapture();
     //log.finishInitialization();
     
   }
@@ -95,7 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    teleopPeriodic();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    teleopPeriodic();
   }
 
   @Override
